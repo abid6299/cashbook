@@ -994,15 +994,16 @@ async function init(){
   const savedTheme=localStorage.getItem('cb_theme')||'dark';
   setTheme(savedTheme);
 
-  // Firebase
-  const fbConfig=loadFirebaseConfig();
-  if(fbConfig){
-    await initFirebase(fbConfig);
-  }else{
-    // Show login screen without Firebase (local mode)
-    document.getElementById('v-login').style.display='flex';
-    document.getElementById('bnav').style.display='none';
-  }
+  // Firebase — config hard-coded
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyB7VGMqXQHOZMTqbaiVlVGS7NTXNvyuuVI",
+    authDomain: "cashbook-c6887.firebaseapp.com",
+    projectId: "cashbook-c6887",
+    storageBucket: "cashbook-c6887.firebasestorage.app",
+    messagingSenderId: "953353297015",
+    appId: "1:953353297015:web:51d7d7859969fc97e83a72"
+  };
+  await initFirebase(FIREBASE_CONFIG);
 }
 init();
 </script>
