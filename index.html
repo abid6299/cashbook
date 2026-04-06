@@ -13,7 +13,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <title>CashBook Pro</title>
-<!-- Firebase CDN -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -261,7 +260,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 <body>
 <div id="app">
 
-  <!-- LOGIN -->
   <div id="v-login" style="display:none;">
     <div class="login-theme-btn" onclick="toggleTheme()" id="loginThemeBtn">🌙</div>
     <div class="login-card">
@@ -276,7 +274,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     </div>
   </div>
 
-  <!-- HOME -->
   <div id="v-home" class="view">
     <div class="hero">
       <div class="brand">
@@ -308,7 +305,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     <button class="fab" onclick="openAddBook()">+</button>
   </div>
 
-  <!-- LEDGER -->
   <div id="v-ledger" class="view">
     <div class="topbar">
       <button class="tb-back" onclick="goHome()">&#8249;</button>
@@ -332,7 +328,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
         <div class="bg-tr"><div class="bg-fl" id="lBfl" style="width:0%"></div></div>
         <div class="bg-sb"><span id="lBspt">Spent: &#8377;0</span><span id="lBmax">Budget: &#8377;50,000</span></div>
       </div>
-      <!-- ENTRY FORM -->
       <div class="ae" id="entryForm">
         <div class="ae-t" id="formTitle">+ New Entry</div>
         <div class="trow">
@@ -367,7 +362,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     </div>
   </div>
 
-  <!-- STATS -->
   <div id="v-stats" class="view">
     <div class="topbar">
       <div style="width:36px"></div>
@@ -384,7 +378,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
   </div>
 </div>
 
-<!-- MODALS -->
 <div class="ov" id="moBook"><div class="mo">
   <div class="mo-hndl"></div>
   <div class="mo-ttl">&#128218; New Book</div>
@@ -438,14 +431,14 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 <div class="toast" id="toast"></div>
 
 <script>
-// ── FIREBASE CONFIG (Hard-coded) ──
+// ── FIREBASE CONFIG (Updated with your new cashbook1-de099 project) ──
 const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyB7VGMqXQHOZMTqbaiVlVGS7NTXNvyuuVI",
-  authDomain: "cashbook-c6887.firebaseapp.com",
-  projectId: "cashbook-c6887",
-  storageBucket: "cashbook-c6887.firebasestorage.app",
-  messagingSenderId: "953353297015",
-  appId: "1:953353297015:web:51d7d7859969fc97e83a72"
+  apiKey: "AIzaSyD62cSDQQAD8ETdiRNgrnUHkTJlwkKpcCY",
+  authDomain: "cashbook1-de099.firebaseapp.com",
+  projectId: "cashbook1-de099",
+  storageBucket: "cashbook1-de099.firebasestorage.app",
+  messagingSenderId: "415929635769",
+  appId: "1:415929635769:web:bfcb051309c9ae1e9e9c68"
 };
 
 // ── CONSTANTS ──
