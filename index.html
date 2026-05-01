@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <title>CashBook Pro</title>
+<!-- Firebase CDN -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -43,7 +44,7 @@
 html,body{height:100%;background:var(--bg);font-family:var(--ff);transition:background .3s,color .3s;}
 body{color:var(--tx);font-size:15px;overflow:hidden;}
 #app{height:100%;display:flex;flex-direction:column;}
-.view{display:none;flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(100px + var(--sab));}
+.view{display:none;flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(72px + var(--sab));}
 .view.on{display:block;}
 
 /* TOPBAR */
@@ -53,26 +54,12 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 .tb-act{background:none;border:1px solid var(--bd2);color:var(--tx2);font-size:13px;font-weight:700;cursor:pointer;padding:7px 14px;border-radius:20px;font-family:var(--ff);}
 .theme-btn{width:40px;height:40px;border-radius:50%;background:var(--s2);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;}
 
-/* NEW MODERN FLOATING BOTTOM NAV */
-#bnav{
-  position:fixed;
-  bottom:calc(15px + var(--sab));
-  left:15px;
-  right:15px;
-  background:var(--s1);
-  border:1px solid var(--bd2);
-  display:flex;
-  border-radius:24px;
-  box-shadow:0 12px 36px rgba(0,0,0,0.4);
-  z-index:90;
-  max-width:510px;
-  margin:0 auto;
-  overflow:hidden;
-}
-.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;background:none;border:none;cursor:pointer;color:var(--tx3);font-family:var(--ff);transition:all 0.3s;}
-.bn.on{color:var(--ac);background:var(--acb);}
-.bn-ic{font-size:20px;line-height:1;}
-.bn-lb{font-size:10px;font-weight:800;}
+/* BOTTOM NAV */
+#bnav{background:var(--s1);border-top:1px solid var(--bd);display:flex;padding-bottom:var(--sab);flex-shrink:0;transition:background .3s;}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;background:none;border:none;cursor:pointer;color:var(--tx3);font-family:var(--ff);}
+.bn.on{color:var(--ac);}
+.bn-ic{font-size:22px;line-height:1;}
+.bn-lb{font-size:10px;font-weight:700;}
 
 /* LOGIN */
 #v-login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:var(--bg);position:relative;}
@@ -131,7 +118,7 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 .bc-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--tx3);font-size:20px;cursor:pointer;padding:4px;z-index:2;}
 
 /* FAB */
-.fab{position:fixed;bottom:calc(100px + var(--sab));right:18px;z-index:40;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#7c6fff,#5a4fff);border:none;color:#fff;font-size:28px;cursor:pointer;box-shadow:0 6px 28px rgba(124,111,255,.45);display:flex;align-items:center;justify-content:center;}
+.fab{position:fixed;bottom:calc(82px + var(--sab));right:18px;z-index:40;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#7c6fff,#5a4fff);border:none;color:#fff;font-size:28px;cursor:pointer;box-shadow:0 6px 28px rgba(124,111,255,.45);display:flex;align-items:center;justify-content:center;}
 .fab:active{transform:scale(.91);}
 
 /* SUMMARY CARDS */
@@ -179,11 +166,7 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 .fg label{font-size:11px;color:var(--tx2);font-weight:700;}
 .fg input,.fg select{background:var(--input-bg);border:1px solid var(--bd2);border-radius:var(--rs);padding:12px;color:var(--tx);font-size:15px;outline:none;width:100%;font-family:var(--ff);-webkit-appearance:none;}
 .fg input:focus,.fg select:focus{border-color:var(--ac);}
-
-/* SEARCH BAR */
-.search-box{background:var(--s2);border:1px solid var(--bd2);border-radius:12px;padding:12px 14px;color:var(--tx);font-size:14px;width:100%;outline:none;font-family:var(--ff);margin-bottom:12px;}
-.search-box:focus{border-color:var(--ac);}
-
+.fg select option{background:var(--s2);color:var(--tx);}
 .add-btn{width:100%;padding:14px;background:linear-gradient(135deg,#7c6fff,#5a4fff);color:#fff;border:none;border-radius:var(--rs);font-size:15px;font-weight:900;cursor:pointer;margin-top:5px;font-family:var(--ff);}
 .add-btn.editing{background:linear-gradient(135deg,#ffb830,#ff9500);}
 
@@ -229,16 +212,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 .cat-bf{height:100%;border-radius:3px;}
 .cat-am{font-size:13px;font-weight:900;white-space:nowrap;}
 
-/* CHAT UI */
-.chat-container{display:flex;flex-direction:column;height:calc(100vh - 170px);padding:15px;}
-.chat-box{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:10px;}
-.msg{max-width:85%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.4;}
-.msg.bot{background:var(--s1);color:var(--tx);align-self:flex-start;border:1px solid var(--bd);border-bottom-left-radius:4px;}
-.msg.user{background:var(--ac);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
-.chat-input-area{display:flex;gap:10px;background:var(--s1);padding:12px;border-radius:20px;border:1px solid var(--bd2);}
-.chat-input-area input{flex:1;background:transparent;border:none;color:var(--tx);outline:none;font-size:15px;}
-.chat-send-btn{background:var(--ac);color:#fff;border:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;}
-
 /* MODAL */
 .ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);align-items:flex-end;justify-content:center;}
 .ov.on{display:flex;}
@@ -275,11 +248,11 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 .ib-x{background:none;border:none;color:var(--tx2);font-size:20px;cursor:pointer;}
 
 /* TOAST */
-.toast{position:fixed;bottom:calc(100px + var(--sab));left:50%;transform:translateX(-50%) translateY(12px);background:var(--s1);border:1px solid var(--bd2);color:var(--tx);padding:10px 20px;border-radius:30px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;max-width:calc(100vw - 32px);text-align:center;box-shadow:var(--shadow);}
+.toast{position:fixed;bottom:calc(86px + var(--sab));left:50%;transform:translateX(-50%) translateY(12px);background:var(--s1);border:1px solid var(--bd2);color:var(--tx);padding:10px 20px;border-radius:30px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:all .28s;pointer-events:none;white-space:nowrap;max-width:calc(100vw - 32px);text-align:center;box-shadow:var(--shadow);}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
 
 @media(min-width:600px){
-  .hero,.gstrip,.sec-hdr,.bwrap,.ldg,.stats-body, .chat-container{max-width:540px;margin-left:auto;margin-right:auto;}
+  .hero,.gstrip,.sec-hdr,.bwrap,.ldg,.stats-body{max-width:540px;margin-left:auto;margin-right:auto;}
   .fab{right:calc(50% - 252px);}
   .mo{border-radius:20px;margin-bottom:40px;}
 }
@@ -288,6 +261,7 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 <body>
 <div id="app">
 
+  <!-- LOGIN -->
   <div id="v-login" style="display:none;">
     <div class="login-theme-btn" onclick="toggleTheme()" id="loginThemeBtn">🌙</div>
     <div class="login-card">
@@ -302,6 +276,7 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     </div>
   </div>
 
+  <!-- HOME -->
   <div id="v-home" class="view">
     <div class="hero">
       <div class="brand">
@@ -333,6 +308,7 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     <button class="fab" onclick="openAddBook()">+</button>
   </div>
 
+  <!-- LEDGER -->
   <div id="v-ledger" class="view">
     <div class="topbar">
       <button class="tb-back" onclick="goHome()">&#8249;</button>
@@ -342,21 +318,21 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     </div>
     <div class="ldg">
       <div class="sg">
-        <div class="sc i"><div class="sc-lb">All Income</div><div class="sc-vl" id="lInc">&#8377;0</div></div>
-        <div class="sc e"><div class="sc-lb">All Expense</div><div class="sc-vl" id="lExp">&#8377;0</div></div>
+        <div class="sc i"><div class="sc-lb">Income</div><div class="sc-vl" id="lInc">&#8377;0</div></div>
+        <div class="sc e"><div class="sc-lb">Expense</div><div class="sc-vl" id="lExp">&#8377;0</div></div>
         <div class="sc b"><div class="sc-lb">Balance</div><div class="sc-vl" id="lBal">&#8377;0</div></div>
       </div>
       <div class="tstrip">
         <div class="ts"><div class="ts-lb">Today Out</div><div class="ts-vl" id="lTdE" style="color:var(--rd)">&#8377;0</div></div>
         <div class="ts"><div class="ts-lb">Today In</div><div class="ts-vl" id="lTdI" style="color:var(--gn)">&#8377;0</div></div>
-        <div class="ts"><div class="ts-lb">Net Today</div><div class="ts-vl" id="lTdN">&#8377;0</div></div>
+        <div class="ts"><div class="ts-lb">Net</div><div class="ts-vl" id="lTdN">&#8377;0</div></div>
       </div>
       <div class="budg">
-        <div class="bg-top"><span class="bg-lb">Monthly Budget Progress</span><span id="lBpct" style="color:var(--gn)">0%</span></div>
+        <div class="bg-top"><span class="bg-lb">Monthly Budget</span><span id="lBpct" style="color:var(--gn)">0%</span></div>
         <div class="bg-tr"><div class="bg-fl" id="lBfl" style="width:0%"></div></div>
-        <div class="bg-sb"><span id="lBspt">Spent (This Mnt): &#8377;0</span><span id="lBmax">Budget: &#8377;50,000</span></div>
+        <div class="bg-sb"><span id="lBspt">Spent: &#8377;0</span><span id="lBmax">Budget: &#8377;50,000</span></div>
       </div>
-      
+      <!-- ENTRY FORM -->
       <div class="ae" id="entryForm">
         <div class="ae-t" id="formTitle">+ New Entry</div>
         <div class="trow">
@@ -368,11 +344,7 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
           <div class="fg"><label>Amount (&#8377;)</label><input id="eAmt" type="number" inputmode="decimal" placeholder="0" min="0"/></div>
         </div>
         <div class="frow">
-          <div class="fg">
-            <label>Category (Select or Type)</label>
-            <input id="eCat" list="catList" placeholder="Select or type custom...">
-            <datalist id="catList"></datalist>
-          </div>
+          <div class="fg"><label>Category</label><select id="eCat"></select></div>
           <div class="fg"><label>Date</label><input id="eDate" type="date"/></div>
         </div>
         <div class="frow f1">
@@ -383,7 +355,6 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
           <button id="cancelEditBtn" onclick="cancelEdit()" style="display:none;padding:14px 18px;background:var(--s2);color:var(--tx2);border:1px solid var(--bd2);border-radius:var(--rs);font-size:14px;font-weight:800;cursor:pointer;font-family:var(--ff);">Cancel</button>
         </div>
       </div>
-
       <div class="txn-hdr">
         <div class="txn-hdr-t">Transactions</div>
         <div class="ftabs">
@@ -392,13 +363,11 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
           <button class="ft" onclick="setF('income',this)">In</button>
         </div>
       </div>
-      
-      <input type="text" id="searchTxn" class="search-box" placeholder="🔍 Search transactions..." onkeyup="renderTxns()">
-
       <div id="txnList"></div>
     </div>
   </div>
 
+  <!-- STATS -->
   <div id="v-stats" class="view">
     <div class="topbar">
       <div style="width:36px"></div>
@@ -408,31 +377,14 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
     <div class="stats-body" id="statsBody"></div>
   </div>
 
-  <div id="v-chat" class="view">
-    <div class="topbar">
-      <div style="width:36px"></div>
-      <div class="tb-title">🤖 Local Finance Bot</div>
-      <div class="theme-btn" onclick="toggleTheme()" id="chatThemeBtn" style="width:36px;height:36px;font-size:17px;">🌙</div>
-    </div>
-    <div class="chat-container">
-      <div class="chat-box" id="chatBox">
-        <div class="msg bot">Hello! I am your local finance assistant. Ask me things like "What is my total expense?" or "Show total income". Note: Full Gemini AI requires an API Key, so I run locally on your data!</div>
-      </div>
-      <div class="chat-input-area">
-        <input type="text" id="chatInput" placeholder="Ask about your finances..." onkeypress="if(event.key === 'Enter') sendChatMsg()">
-        <button class="chat-send-btn" onclick="sendChatMsg()">➤</button>
-      </div>
-    </div>
-  </div>
-
   <div id="bnav" style="display:none;">
     <button class="bn on" id="bn-home" onclick="switchTab('home')"><div class="bn-ic">&#127968;</div><div class="bn-lb">Home</div></button>
     <button class="bn" id="bn-stats" onclick="switchTab('stats')"><div class="bn-ic">&#128202;</div><div class="bn-lb">Stats</div></button>
-    <button class="bn" id="bn-chat" onclick="switchTab('chat')"><div class="bn-ic">🤖</div><div class="bn-lb">Chat</div></button>
     <button class="bn" id="bn-settings" onclick="switchTab('settings')"><div class="bn-ic">&#9881;&#65039;</div><div class="bn-lb">Settings</div></button>
   </div>
 </div>
 
+<!-- MODALS -->
 <div class="ov" id="moBook"><div class="mo">
   <div class="mo-hndl"></div>
   <div class="mo-ttl">&#128218; New Book</div>
@@ -486,14 +438,14 @@ body{color:var(--tx);font-size:15px;overflow:hidden;}
 <div class="toast" id="toast"></div>
 
 <script>
-// ── FIREBASE CONFIG (Aapki Config) ──
+// ── FIREBASE CONFIG (Hard-coded) ──
 const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyD62cSDQQAD8ETdiRNgrnUHkTJlwkKpcCY",
-  authDomain: "cashbook1-de099.firebaseapp.com",
-  projectId: "cashbook1-de099",
-  storageBucket: "cashbook1-de099.firebasestorage.app",
-  messagingSenderId: "415929635769",
-  appId: "1:415929635769:web:bfcb051309c9ae1e9e9c68"
+  apiKey: "AIzaSyB7VGMqXQHOZMTqbaiVlVGS7NTXNvyuuVI",
+  authDomain: "cashbook-c6887.firebaseapp.com",
+  projectId: "cashbook-c6887",
+  storageBucket: "cashbook-c6887.firebasestorage.app",
+  messagingSenderId: "953353297015",
+  appId: "1:953353297015:web:51d7d7859969fc97e83a72"
 };
 
 // ── CONSTANTS ──
@@ -515,7 +467,7 @@ function setTheme(t){
   document.documentElement.setAttribute('data-theme',t);
   localStorage.setItem('cb_theme',t);
   const icon=t==='dark'?'🌙':'☀️';
-  ['loginThemeBtn','homeThemeBtn','ldgThemeBtn','statsThemeBtn','chatThemeBtn'].forEach(id=>{
+  ['loginThemeBtn','homeThemeBtn','ldgThemeBtn','statsThemeBtn'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.textContent=icon;
   });
   const db=document.getElementById('darkBtn'),lb=document.getElementById('lightBtn');
@@ -565,6 +517,7 @@ function loginGoogle(){
   const provider=new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).catch(e=>{
     toast('❌ Login failed: '+e.message);
+    console.error(e);
   });
 }
 
@@ -591,7 +544,7 @@ async function saveBook(book){
   try{
     await fbDb.collection('books').doc(book.id).set({...book,uid:fbUser.uid});
     flashDot();
-  }catch(e){toast('Save error: '+e.message);}
+  }catch(e){toast('Save error: '+e.message);console.error(e);}
 }
 
 async function removeBook(id){
@@ -606,8 +559,7 @@ function switchTab(t){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
   document.getElementById('v-'+t).classList.add('on');
-  const btn = document.getElementById('bn-'+t);
-  if(btn) btn.classList.add('on');
+  document.getElementById('bn-'+t).classList.add('on');
   if(t==='stats')renderStats();
   if(t==='home')renderHome();
 }
@@ -626,7 +578,6 @@ function openBook(id){
   document.getElementById('ldgTitle').textContent=b.emoji+' '+b.name;
   document.getElementById('lBmax').textContent='Budget: '+fmt(b.budget||50000);
   document.getElementById('eDate').value=todayStr();
-  document.getElementById('searchTxn').value=''; // clear search
   setET('expense');
   document.querySelectorAll('.ft').forEach((f,i)=>f.classList.toggle('on',i===0));
   txnF='all';
@@ -645,24 +596,37 @@ function renderHome(){
     <div class="gs"><div class="gs-lb">All Income</div><div class="gs-vl" style="color:var(--gn)">${fmt(gI)}</div></div>
     <div class="gs"><div class="gs-lb">All Expense</div><div class="gs-vl" style="color:var(--rd)">${fmt(gO)}</div></div>
     <div class="gs"><div class="gs-lb">Net Total</div><div class="gs-vl" style="color:${gN>=0?'var(--ac)':'var(--rd)'}">${gN>=0?'+':''}${fmt(gN)}</div></div>`;
-  const m=todayStr().slice(0,7);
   document.getElementById('booksList').innerHTML=books.length?books.map(b=>{
     const en=b.entries||[];
+    // ALL TIME totals - not just current month
+    const tI=en.filter(e=>e.type==='income').reduce((s,e)=>s+e.amount,0);
+    const tO=en.filter(e=>e.type==='expense').reduce((s,e)=>s+e.amount,0);
+    const tB=tI-tO;
+    // This month totals
+    const m=todayStr().slice(0,7);
     const mI=en.filter(e=>e.type==='income'&&e.date.startsWith(m)).reduce((s,e)=>s+e.amount,0);
     const mO=en.filter(e=>e.type==='expense'&&e.date.startsWith(m)).reduce((s,e)=>s+e.amount,0);
-    const mB=mI-mO;
     return `<div class="bcard" onclick="openBook('${b.id}')" style="border-left-color:${b.color}">
       <button class="bc-del" onclick="event.stopPropagation();delBook('${b.id}')">×</button>
       <div class="bc-top">
         <div class="bc-ic" style="background:${b.color}20;border:1px solid ${b.color}40">${b.emoji}</div>
-        <div class="bc-inf"><div class="bc-nm">${b.name}</div><div class="bc-ds">${b.desc||'Tap to open'} · ${en.length} entries</div></div>
+        <div class="bc-inf">
+          <div class="bc-nm">${b.name}</div>
+          <div class="bc-ds">${b.desc||'Tap to open'} · ${en.length} entries</div>
+        </div>
         <div class="bc-arr">›</div>
       </div>
       <div class="bc-stats">
-        <div class="bs"><div class="bs-lb">Income (This Mnt)</div><div class="bs-vl" style="color:var(--gn)">${fmt(mI)}</div></div>
-        <div class="bs"><div class="bs-lb">Expense</div><div class="bs-vl" style="color:var(--rd)">${fmt(mO)}</div></div>
-        <div class="bs"><div class="bs-lb">Balance</div><div class="bs-vl" style="color:${mB>=0?'var(--ac)':'var(--rd)'}">${mB>=0?'+':''}${fmt(mB)}</div></div>
+        <div class="bs"><div class="bs-lb">Total In</div><div class="bs-vl" style="color:var(--gn)">${fmt(tI)}</div></div>
+        <div class="bs"><div class="bs-lb">Total Out</div><div class="bs-vl" style="color:var(--rd)">${fmt(tO)}</div></div>
+        <div class="bs"><div class="bs-lb">Balance</div><div class="bs-vl" style="color:${tB>=0?'var(--ac)':'var(--rd)'}">${tB>=0?'+':''}${fmt(tB)}</div></div>
       </div>
+      ${(mI>0||mO>0)?`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bd);display:flex;justify-content:space-between;font-size:11px;font-weight:700;">
+        <span style="color:var(--tx2)">This month:</span>
+        <span style="color:var(--gn)">+${fmt(mI)}</span>
+        <span style="color:var(--rd)">-${fmt(mO)}</span>
+        <span style="color:${mI-mO>=0?'var(--ac)':'var(--rd)'}">${mI-mO>=0?'+':''}${fmt(mI-mO)}</span>
+      </div>`:''}
     </div>`;
   }).join(''):'<div class="empty"><div class="empty-ic">📚</div>No books yet.<br>Tap + to create your first.</div>';
 }
@@ -691,14 +655,12 @@ async function delBook(id){
   await removeBook(id);toast('Book deleted');
 }
 
-// ── ENTRY TYPE (Custom Category Support) ──
+// ── ENTRY TYPE ──
 function setET(t){
   eType=t;
   document.getElementById('btnE').className='tbtn exp'+(t==='expense'?' on':'');
   document.getElementById('btnI').className='tbtn inc'+(t==='income'?' on':'');
-  // Populate datalist for category
-  document.getElementById('catList').innerHTML=(t==='income'?ICATS:ECATS).map(c=>`<option value="${c}">`).join('');
-  document.getElementById('eCat').value=''; // clear input when switching
+  document.getElementById('eCat').innerHTML=(t==='income'?ICATS:ECATS).map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 
 // ── ADD/EDIT ENTRY ──
@@ -706,11 +668,8 @@ async function submitEntry(){
   const b=bookObj();if(!b)return;
   const desc=document.getElementById('eDesc').value.trim();
   const amt=parseFloat(document.getElementById('eAmt').value);
-  const cat=document.getElementById('eCat').value.trim() || 'General'; // default if empty
-  
   if(!desc||!amt||amt<=0){toast('⚠️ Description aur amount bharo');return;}
-  
-  const data={type:eType,desc,amount:amt,cat,date:document.getElementById('eDate').value||todayStr(),note:document.getElementById('eNote').value.trim()};
+  const data={type:eType,desc,amount:amt,cat:document.getElementById('eCat').value,date:document.getElementById('eDate').value||todayStr(),note:document.getElementById('eNote').value.trim()};
   if(editingId){
     const idx=b.entries.findIndex(e=>e.id===editingId);
     if(idx>=0)b.entries[idx]={...b.entries[idx],...data,updatedAt:new Date().toISOString()};
@@ -720,7 +679,6 @@ async function submitEntry(){
     await saveBook(b);
     toast(eType==='expense'?'↑ Saved!':'↓ Saved!',1400);
     ['eDesc','eAmt','eNote'].forEach(i=>document.getElementById(i).value='');
-    document.getElementById('eCat').value='';
   }
   renderLedger();
 }
@@ -755,7 +713,7 @@ function cancelEdit(){
   document.getElementById('cancelEditBtn').style.display='none';
   document.getElementById('entryForm').style.border='1px solid var(--bd)';
   document.querySelectorAll('.tx').forEach(r=>r.classList.remove('editing-hl'));
-  ['eDesc','eAmt','eNote','eCat'].forEach(i=>document.getElementById(i).value='');
+  ['eDesc','eAmt','eNote'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('eDate').value=todayStr();
 }
 
@@ -768,69 +726,46 @@ async function delEntry(id){
 
 function setF(f,el){txnF=f;document.querySelectorAll('.ft').forEach(t=>t.classList.remove('on'));el.classList.add('on');renderTxns();}
 
-// ── LEDGER RENDER (Fixed ALL-TIME stats logic) ──
+// ── LEDGER RENDER ──
 function renderLedger(){
   const b=bookObj();if(!b)return;
   const td=todayStr(),m=td.slice(0,7);
-  let allI=0,allO=0,dI=0,dO=0, mntO=0;
-  
+  let tI=0,tO=0,mI=0,mO=0,dI=0,dO=0;
   (b.entries||[]).forEach(e=>{
-    // Calculate ALL TIME Income and Expense
-    if(e.type==='income')allI+=e.amount;else allO+=e.amount;
-    
-    // Calculate Today's In/Out
+    // All time
+    if(e.type==='income')tI+=e.amount;else tO+=e.amount;
+    // This month
+    if(e.date.startsWith(m)){if(e.type==='income')mI+=e.amount;else mO+=e.amount;}
+    // Today
     if(e.date===td){if(e.type==='income')dI+=e.amount;else dO+=e.amount;}
-    
-    // Calculate Current Month Expense for Budget Bar ONLY
-    if(e.type==='expense' && e.date.startsWith(m)) mntO+=e.amount;
   });
-  
-  const n=allI-allO,dn=dI-dO,bg=b.budget||50000;
-  
-  // Set All Time Cards
-  document.getElementById('lInc').textContent=fmt(allI);
-  document.getElementById('lExp').textContent=fmt(allO);
+  const n=tI-tO,dn=dI-dO,bg=b.budget||50000;
+  // Show ALL TIME in summary cards
+  document.getElementById('lInc').textContent=fmt(tI);
+  document.getElementById('lExp').textContent=fmt(tO);
   document.getElementById('lBal').textContent=(n>=0?'+':'')+fmt(n);
   document.getElementById('lBal').style.color=n>=0?'var(--ac)':'var(--rd)';
-  
-  // Set Today Cards
+  // Today strip
   document.getElementById('lTdE').textContent=fmt(dO);
   document.getElementById('lTdI').textContent=fmt(dI);
   document.getElementById('lTdN').textContent=(dn>=0?'+':'')+fmt(dn);
   document.getElementById('lTdN').style.color=dn>=0?'var(--gn)':'var(--rd)';
-  
-  // Set Budget Bar (Based on current month expenses)
-  const pct=Math.min(100,Math.round(mntO/bg*100));
+  // Budget based on this month expense
+  const pct=Math.min(100,Math.round(mO/bg*100));
   document.getElementById('lBpct').textContent=pct+'%';
   document.getElementById('lBpct').style.color=pct>85?'var(--rd)':pct>60?'var(--am)':'var(--gn)';
   const fl=document.getElementById('lBfl');
   fl.style.width=pct+'%';
   fl.style.background=pct>85?'linear-gradient(90deg,#ff5c5c,#ff9f43)':pct>60?'linear-gradient(90deg,#ffb830,#ffd96b)':'linear-gradient(90deg,#7c6fff,#3d8eff)';
-  document.getElementById('lBspt').textContent='Spent (This Mnt): '+fmt(mntO);
-  
+  document.getElementById('lBspt').textContent='This month: '+fmt(mO);
   renderTxns();
 }
 
-// ── RENDER TRANSACTIONS WITH SEARCH ──
 function renderTxns(){
   const b=bookObj();if(!b)return;
   const td=todayStr();
-  
-  // 1. Filter by Tab (All/Out/In)
-  let fl = txnF==='all'?(b.entries||[]):(b.entries||[]).filter(e=>e.type===txnF);
-  
-  // 2. Filter by Search Box
-  const sq = document.getElementById('searchTxn').value.toLowerCase().trim();
-  if(sq) {
-    fl = fl.filter(e => 
-      e.desc.toLowerCase().includes(sq) || 
-      e.cat.toLowerCase().includes(sq) || 
-      e.amount.toString().includes(sq)
-    );
-  }
-
-  if(!fl.length){document.getElementById('txnList').innerHTML='<div class="empty"><div class="empty-ic">📋</div>No transactions found.</div>';return;}
-  
+  const fl=txnF==='all'?(b.entries||[]):(b.entries||[]).filter(e=>e.type===txnF);
+  if(!fl.length){document.getElementById('txnList').innerHTML='<div class="empty"><div class="empty-ic">📋</div>No transactions yet.</div>';return;}
   const bd={};fl.forEach(e=>{if(!bd[e.date])bd[e.date]=[];bd[e.date].push(e);});
   document.getElementById('txnList').innerHTML=Object.keys(bd).sort().reverse().map(d=>{
     const it=bd[d];
@@ -882,56 +817,6 @@ function renderStats(){
     ${cats.length?cats.map(([c,a])=>`<div class="cat-row"><div style="font-size:21px;width:30px">${CE[c]||'📦'}</div><div class="cat-bw"><div class="cat-nm">${c}</div><div class="cat-br"><div class="cat-bf" style="width:${Math.round(a/mx*100)}%;background:${CC[c]||'#7c83a0'}"></div></div></div><div class="cat-am" style="color:var(--rd)">${fmt(a)}</div></div>`).join(''):'<div style="color:var(--tx3);font-size:13px;padding:10px 0;">No expense data this month</div>'}
     <div class="st-ttl">By Book</div>
     ${br.map(b=>`<div class="cat-row"><div style="font-size:20px;width:30px">${b.name.split(' ')[0]}</div><div class="cat-bw"><div class="cat-nm">${b.name.split(' ').slice(1).join(' ')}</div><div style="display:flex;gap:10px;font-size:11px;font-weight:700;margin-top:3px;"><span style="color:var(--gn)">+${fmt(b.in)}</span><span style="color:var(--rd)">-${fmt(b.out)}</span></div></div><div class="cat-am" style="color:${b.in-b.out>=0?'var(--ac)':'var(--rd)'}">${b.in-b.out>=0?'+':''}${fmt(b.in-b.out)}</div></div>`).join('')}`;
-}
-
-// ── LOCAL FINANCE BOT LOGIC ──
-function addChatBubble(sender, text) {
-  const box = document.getElementById('chatBox');
-  const div = document.createElement('div');
-  div.className = `msg ${sender}`;
-  div.innerText = text;
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
-}
-
-function sendChatMsg() {
-  const input = document.getElementById('chatInput');
-  const msg = input.value.trim();
-  if(!msg) return;
-  
-  addChatBubble('user', msg);
-  input.value = '';
-  
-  // Simulate bot thinking time
-  setTimeout(() => { processBotResponse(msg); }, 600);
-}
-
-function processBotResponse(msg) {
-  const q = msg.toLowerCase();
-  let totalI = 0, totalE = 0;
-  
-  // Calculate globals
-  books.forEach(b => {
-    (b.entries||[]).forEach(e => {
-      if(e.type === 'income') totalI += e.amount;
-      else totalE += e.amount;
-    });
-  });
-
-  let reply = "Mujhe samajh nahi aaya. Main aapke local data ka bot hoon. Try asking: 'total expense', 'total income', or 'balance'.";
-  
-  if(q.includes('expense') || q.includes('kharcha')) {
-    reply = `Aapka total expense (saari books milakar) ₹${totalE.toLocaleString('en-IN')} hai.`;
-  } else if(q.includes('income') || q.includes('kamai')) {
-    reply = `Aapki total income ₹${totalI.toLocaleString('en-IN')} hai.`;
-  } else if(q.includes('balance') || q.includes('bacha')) {
-    const bal = totalI - totalE;
-    reply = `Aapka net balance ₹${bal.toLocaleString('en-IN')} hai.`;
-  } else if(q.includes('hello') || q.includes('hi')) {
-    reply = "Hello bhai! Boliye, main aapke finance calculations mein kya madad kar sakta hoon?";
-  }
-  
-  addChatBubble('bot', reply);
 }
 
 // ── MENU ──
