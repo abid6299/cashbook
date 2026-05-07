@@ -529,15 +529,30 @@ function doLogout(){
 // ── FIRESTORE ──
 function subscribeBooks(){
   if(!fbDb||!fbUser)return;
-  if(unsubBooks){unsubBooks();unsubBooks=null;}
-  unsubBooks=fbDb.collection('books').where('uid','==',fbUser.uid)
+
+  if(unsubBooks){
+    unsubBooks();
+    unsubBooks=null;
+  }
+
+  unsubBooks=fbDb.collection('books')
     .onSnapshot(snap=>{
-      books=snap.docs.map(d=>({id:d.id,...d.data()}));
+      books=snap.docs.map(d=>({
+        id:d.id,
+        ...d.data()
+      }));
+
       renderHome();
-      if(activeId)renderLedger();
+
+      if(activeId) renderLedger();
+
       renderStats();
+
       flashDot();
-    },err=>console.error('Firestore error:',err));
+
+    },err=>{
+      console.error('Firestore error:',err);
+    });
 }
 
 async function saveBook(book){
