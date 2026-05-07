@@ -498,6 +498,8 @@ function initFirebase(){
         document.getElementById('bnav').style.display='flex';
         document.getElementById('userAvatar').src=user.photoURL||'';
         document.getElementById('userName').textContent=user.displayName||user.email;
+        // Auto-migrate old books (runs once on login)
+        migrateOldBooks();
         subscribeBooks();
         switchTab('home');
       }else{
@@ -526,33 +528,43 @@ function doLogout(){
   firebase.auth().signOut().then(()=>toast('Signed out'));
 }
 
+// ── MIGRATION: Add uid to old books that don't have it ──
+async function migrateOldBooks(){
+  if(!fbDb||!fbUser)return;
+  try{
+    // This fetches ALL books. Requires relaxed rules during first run.
+    const snap=await fbDb.collection('books').get();
+    const batch=fbDb.batch();
+    let count=0;
+    snap.forEach(doc=>{
+      const data=doc.data();
+      if(!data.uid){
+        batch.update(doc.ref,{uid:fbUser.uid});
+        count++;
+      }
+    });
+    if(count>0){
+      await batch.commit();
+      toast('✅ '+count+' old books secured');
+      console.log('Migrated',count,'books');
+    }
+  }catch(e){
+    console.log('Migration check complete (strict rules active or no old data)');
+  }
+}
+
 // ── FIRESTORE ──
 function subscribeBooks(){
   if(!fbDb||!fbUser)return;
-
-  if(unsubBooks){
-    unsubBooks();
-    unsubBooks=null;
-  }
-
-  unsubBooks=fbDb.collection('books')
+  if(unsubBooks){unsubBooks();unsubBooks=null;}
+  unsubBooks=fbDb.collection('books').where('uid','==',fbUser.uid)
     .onSnapshot(snap=>{
-      books=snap.docs.map(d=>({
-        id:d.id,
-        ...d.data()
-      }));
-
+      books=snap.docs.map(d=>({id:d.id,...d.data()}));
       renderHome();
-
-      if(activeId) renderLedger();
-
+      if(activeId)renderLedger();
       renderStats();
-
       flashDot();
-
-    },err=>{
-      console.error('Firestore error:',err);
-    });
+    },err=>console.error('Firestore error:',err));
 }
 
 async function saveBook(book){
@@ -660,7 +672,17 @@ function openAddBook(){
 async function createBook(){
   const name=document.getElementById('nbNm').value.trim();
   if(!name){toast('⚠️ Book name daalo');return;}
-  const b={id:'b'+Date.now(),name,desc:document.getElementById('nbDs').value.trim(),budget:parseFloat(document.getElementById('nbBd').value)||50000,emoji:selEmoji,color:selColor,entries:[],createdAt:new Date().toISOString()};
+  const b={
+    id:'b'+Date.now(),
+    name,
+    desc:document.getElementById('nbDs').value.trim(),
+    budget:parseFloat(document.getElementById('nbBd').value)||50000,
+    emoji:selEmoji,
+    color:selColor,
+    entries:[],
+    createdAt:new Date().toISOString(),
+    uid:fbUser.uid  // ← SECURITY: har nayi book me user ka uid
+  };
   closeOv('moBook');
   await saveBook(b);
   toast('📒 "'+name+'" created!');
